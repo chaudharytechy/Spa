@@ -1,4 +1,4 @@
-name: Deploy chaudharytechy/spa
+name: Deploy chaudharytechy/react-Front
 
 on: 
   push:
