@@ -1,0 +1,34 @@
+name: Deploy chaudharytechy/react-Front
+
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}     
+      - name: Build Docker Image
+        run: docker build -t amit630/spa .
+
+
+      - name: Publish Image to docker hub
+        run: docker push amit630/spa:latest 
+ 
+  deploy:
+    needs: build
+    runs-on: self-hosted 
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull amit630/spa:latest 
+      - name: Delete old container
+        run: |
+            if [ "$(docker ps -aq -f name=amit630-spa-container)" ]; then
+            docker rm -f amit630-spa-container
+            fi
+      - name: Run Docker Container
+        run: docker run -d -p 3000:80 --name amit630-frontend-container  amit630/spa 
