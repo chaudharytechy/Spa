@@ -1,4 +1,4 @@
-name: Deploy chaudharytechy/react-Front
+name: Deploy chaudharytechy/spa
 
 on: 
   push:
@@ -31,4 +31,4 @@ jobs:
             docker rm -f amit630-spa-container
             fi
       - name: Run Docker Container
-        run: docker run -d -p 3000:80 --name amit630-frontend-container  amit630/spa 
+        run: docker run -d -p 3000:80 --name amit630-spa-container  amit630/spa 
